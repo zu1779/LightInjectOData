@@ -31,9 +31,9 @@
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             //TODO: remove commented lines to enable odata
-            //services.AddOData();
+            services.AddOData();
             services.AddMvc().AddControllersAsServices();
-            var container = new ServiceContainer(new ContainerOptions { EnablePropertyInjection = false });
+            var container = new ServiceContainer(new ContainerOptions().WithMicrosoftSettings());
             container.Register<IService, Service>();
             return container.CreateServiceProvider(services);
         }
@@ -45,8 +45,8 @@
             app.UseMvc(cr =>
             {
                 //TODO: remove commented lines to enable odata
-                //cr.Select().Expand().Filter().OrderBy().MaxTop(null).Count();
-                //cr.MapODataServiceRoute("odataroute", "odata", getEdmModel());
+                cr.Select().Expand().Filter().OrderBy().MaxTop(null).Count();
+                cr.MapODataServiceRoute("odataroute", "odata", getEdmModel());
             });
         }
 
